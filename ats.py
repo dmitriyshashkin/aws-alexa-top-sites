@@ -88,9 +88,12 @@ class AlexaTopSites:
             "Action": AWS_ACTION,
             "ResponseGroup": AWS_RESPONSE_GROUP,
             "Start": start,
-            "Count": count,
-            "CountryCode": country_code
+            "Count": count
         }
+
+        if country_code is not None:
+            query['CountryCode'] = country_code
+
         query_string = "&".join(["%s=%s" % (param, query[param]) for param in sorted(query)])
         return query_string
 
@@ -167,7 +170,7 @@ def main():
 
     parser.add_argument('-key', action='store', dest='access_key_id', required=True)
     parser.add_argument('-secret', action='store', dest='secret_access_key', required=True)
-    parser.add_argument('-country', action='store', dest='country_code', required=True)
+    parser.add_argument('-country', action='store', dest='country_code')
     parser.add_argument('-count', action='store', dest='count', type=int, required=True)
     parser.add_argument('-start', action='store', dest='start', type=int)
 
